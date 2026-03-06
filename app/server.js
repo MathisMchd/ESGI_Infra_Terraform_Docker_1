@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3000;
 const APP_ENV = process.env.APP_ENV || 'development';
 const DATABASE_URL = process.env.DATABASE_URL;
 
+
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
 });
