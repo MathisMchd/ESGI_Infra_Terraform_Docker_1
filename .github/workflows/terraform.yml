@@ -9,6 +9,9 @@ jobs:
   terraform-check:
     name: Terraform Check
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./terraform
 
     steps:
       # Récupérer le dépôt
@@ -24,6 +27,7 @@ jobs:
       # Initialiser Terraform
       - name: Terraform Init
         run: terraform init
+        
 
       # Vérifier le format des fichiers
       - name: Terraform Format Check
