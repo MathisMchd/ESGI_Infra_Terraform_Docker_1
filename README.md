@@ -46,7 +46,7 @@ curl http://localhost:4000/
 
 ## Configuration
 
-Variables d'environnement (`.env`)
+Variables d'environnement (`.env` à ajouter sur le modèle du `.env.example`)
 
 
 ## Structure du projet
