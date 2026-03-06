@@ -1,35 +1,101 @@
-# API Node.js - Infra DevOps
+# Infra DevOps - API Node.js
 
-API Node.js simple respectant les spécifications DevOps.
+Infrastructure complète avec API Node.js, PostgreSQL et Adminer, orchestrée par Terraform et Docker.
 
-## Installation
+## Architecture
+
+- **API** : Node.js + Express (port 3000)
+- **Base de données** : PostgreSQL 16 Alpine
+- **Admin DB** : Adminer (port 4000)
+- **Infrastructure** : Terraform avec provider Docker
+- **Réseau** : Docker network dédié
+
+## Prérequis
+
+- Docker & Docker Compose
+- Terraform >= 1.0
+- Node.js 18+ (dev local)
+- npm
+
+## Démarrage rapide
+
+### Avec Terraform
 
 ```bash
-npm install
+cd terraform
+terraform init
+terraform apply
 ```
+
+Cela déploie automatiquement PostgreSQL, l'API et Adminer.
+
+### Tests endpoints
+
+```bash
+# Health check
+curl http://localhost:3000/health
+
+# Infos API
+curl http://localhost:3000/
+
+# Adminer 
+curl http://localhost:4000/
+```
+
+
 
 ## Configuration
 
-Créer un fichier `.env` à la racine du projet en copiant `.env.example` :
+Variables d'environnement (`.env`)
 
-```bash
-cp .env.example .env
+
+## Structure du projet
+
+```
+.
+├── app/                    # Application Node.js
+│   ├── server.js
+│   ├── package.json
+│   ├── Dockerfile
+│   └── node_modules/
+├── terraform/              # Infrastructure IaC
+│   ├── main.tf            # Ressources Docker
+│   ├── variables.tf       # Variables
+│   ├── outputs.tf         # Outputs
+│   └── versions.tf        # Requirements
+└── .env.example           # Template variables
 ```
 
-Variables disponibles :
-- `PORT` : Port d'écoute (défaut: 3000)
-- `APP_ENV` : Environnement de l'application
-- `DATABASE_URL` : URL de connexion à la base de données
+## Déploiement Docker
 
-## Utilisation
-
-Démarrer le serveur :
+### Build image API
 
 ```bash
-npm start
+docker build -t infra-devops-api:latest ./app
 ```
 
-## Endpoints
+### Avec docker-compose
 
-- `GET /health` → `200 OK` avec `{"status":"ok"}`
-- `GET /` → Informations sur l'application avec l'environnement actuel
+```bash
+docker-compose up
+```
+
+## Terraform
+
+### Ressources créées
+
+- Réseau Docker : `infra-devops`
+- Conteneur PostgreSQL : `postgres`
+- Conteneur API : `api`
+- Conteneur Adminer : `adminer`
+
+### Commandes
+
+```bash
+cd terraform
+terraform plan      # Aperçu changements
+terraform apply     # Déploiement
+terraform destroy   # Suppression
+terraform output    # Afficher outputs
+```
+
