@@ -23,16 +23,16 @@ jobs:
 
       # Initialiser Terraform
       - name: Terraform Init
-        run: terraform init
+        run: terraform init ./terraform
 
       # Vérifier le format des fichiers
       - name: Terraform Format Check
-        run: terraform fmt
+        run: terraform fmt ./terraform
 
       # Vérifier la syntaxe
       - name: Terraform Validate
-        run: terraform validate
+        run: terraform validate ./terraform
 
       # Générer le plan
       - name: Terraform Plan
-        run: terraform plan
+        run: terraform plan ./terraform
