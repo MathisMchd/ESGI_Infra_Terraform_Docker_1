@@ -1,0 +1,38 @@
+name: Terraform PR Checks
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  terraform-check:
+    name: Terraform Check
+    runs-on: ubuntu-latest
+
+    steps:
+      # Récupérer le dépôt
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Installer Terraform (version stable)
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.8.0
+
+      # Initialiser Terraform
+      - name: Terraform Init
+        run: terraform init
+
+      # Vérifier le format des fichiers
+      - name: Terraform Format Check
+        run: terraform fmt
+
+      # Vérifier la syntaxe
+      - name: Terraform Validate
+        run: terraform validate
+
+      # Générer le plan
+      - name: Terraform Plan
+        run: terraform plan
